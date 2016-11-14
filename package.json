@@ -1,6 +1,6 @@
 {
   "name": "hubot-sentry-integration",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Clone sentry integration with slack",
   "main": "src",
   "scripts": {
