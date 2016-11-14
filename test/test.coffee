@@ -3,7 +3,6 @@ Helper = require("hubot-test-helper")
 expect = require("chai").expect
 http = require("http")
 querystring = require("querystring")
-nock = require("nock")
 
 helper = new Helper("./../src/index.coffee")
 
