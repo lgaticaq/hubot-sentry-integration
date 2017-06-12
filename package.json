@@ -4,8 +4,10 @@
   "description": "Clone sentry integration with slack",
   "main": "src",
   "scripts": {
-    "pretest": "coffeelint src test",
-    "test": "mocha --compilers coffee:coffee-script/register --require coffee-coverage/register-istanbul",
+    "lint": "eslint 'src/**/*.js' 'test/**/*.js'",
+    "format": "prettier-standard 'src/**/*.js' 'test/**/*.js'",
+    "pretest": "npm run lint -s && npm run format -s",
+    "test": "mocha",
     "posttest": "istanbul report text-summary lcov",
     "coveralls": "coveralls < coverage/lcov.info",
     "codeclimate": "codeclimate-test-reporter < coverage/lcov.info",
@@ -14,7 +16,7 @@
     "release:patch": "changelog -p && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version patch && git push origin && git push origin --tags && npm publish"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "repository": {
     "type": "git",
@@ -34,15 +36,29 @@
   "homepage": "https://github.com/lgaticaq/hubot-sentry-integration#readme",
   "dependencies": {},
   "devDependencies": {
-    "chai": "^4.0.0",
-    "codeclimate-test-reporter": "^0.5.0",
-    "coffee-coverage": "^2.0.0",
-    "coffee-script": "^1.11.1",
-    "coffeelint": "^1.16.0",
-    "coveralls": "^2.11.15",
-    "generate-changelog": "^1.0.2",
-    "hubot-test-helper": "^1.5.0",
+    "chai": "^4.0.2",
+    "coffee-script": "^1.12.6",
+    "eslint": "^4.0.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-node": "^5.0.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "generate-changelog": "^1.2.0",
+    "hubot-test-helper": "^1.5.1",
     "istanbul": "^0.4.5",
-    "mocha": "^3.1.2"
+    "mocha": "^3.4.2",
+    "prettier-standard": "^5.1.0"
+  },
+  "eslintConfig": {
+    "extends": "standard",
+    "parserOptions": {
+      "ecmaVersion": 2017
+    },
+    "env": {
+      "es6": true,
+      "node": true,
+      "mocha": true
+    }
   }
 }
