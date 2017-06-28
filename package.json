@@ -48,7 +48,7 @@
     "hubot-test-helper": "^1.5.1",
     "istanbul": "^0.4.5",
     "mocha": "^3.4.2",
-    "prettier-standard": "^5.1.0"
+    "prettier-standard": "^6.0.0"
   },
   "eslintConfig": {
     "extends": "standard",
