@@ -36,7 +36,7 @@
   "homepage": "https://github.com/lgaticaq/hubot-sentry-integration#readme",
   "dependencies": {},
   "devDependencies": {
-    "chai": "4.1.2",
+    "chai": "4.2.0",
     "coffee-script": "1.12.7",
     "eslint": "4.19.1",
     "eslint-config-standard": "11.0.0",
