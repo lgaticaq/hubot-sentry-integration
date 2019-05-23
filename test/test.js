@@ -3,7 +3,6 @@
 const Helper = require('hubot-test-helper')
 const { expect } = require('chai')
 const http = require('http')
-const querystring = require('querystring')
 
 const helper = new Helper('./../src/index.js')
 
@@ -15,7 +14,7 @@ describe('hubot-sentry', function () {
         dataStore: {
           getChannelByName: to => {
             const channels = {
-              '#general': { id: 'R00000001', name: 'general' }
+              general: { id: 'R00000001', name: 'general' }
             }
             return channels[to]
           }
@@ -40,36 +39,23 @@ describe('hubot-sentry', function () {
           }
         }
       }
-      const postData = querystring.stringify({
-        payload: JSON.stringify({
-          parse: 'none',
-          username: 'Sentry',
-          attachments: [
-            {
-              color: '#f43f20',
-              fields: [
-                {
-                  short: true,
-                  value: 'Escaleno visto-bueno',
-                  title: 'Project'
-                }
-              ],
-              fallback: '[Escaleno visto-bueno] Hola mundo',
-              title_link:
-                'https://sentry.io/escaleno/visto-bueno/issues/180903558/',
-              title: 'Hola mundo'
-            }
-          ],
-          channel: '#visto-bueno'
-        })
+      const postData = JSON.stringify({
+        message: 'This is an example Python exception',
+        url: 'https://sentry.io/escaleno/visto-bueno/issues/180903558/',
+        culprit: 'raven.scripts.runner in main',
+        level: 'error',
+        project_slug: 'visto-bueno',
+        event: {
+          timestamp: 1558586196.707
+        }
       })
       const postOptions = {
         hostname: 'localhost',
         port: 8080,
-        path: '/sentry',
+        path: '/sentry/general',
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
           'Content-Length': Buffer.byteLength(postData)
         }
       }
@@ -81,98 +67,17 @@ describe('hubot-sentry', function () {
     })
 
     it('responds with status 200 and results', () => {
-      expect(this.postMessage.options.parse).to.eql('none')
       expect(this.postMessage.options.username).to.eql('Sentry')
       expect(this.postMessage.options.attachments).to.eql([
         {
-          color: '#f43f20',
-          fields: [
-            {
-              short: true,
-              value: 'Escaleno visto-bueno',
-              title: 'Project'
-            }
-          ],
-          fallback: '[Escaleno visto-bueno] Hola mundo',
-          title_link:
-            'https://sentry.io/escaleno/visto-bueno/issues/180903558/',
-          title: 'Hola mundo'
-        }
-      ])
-      expect(this.postMessage.options.channel).to.eql('#visto-bueno')
-    })
-  })
-
-  context('POST /sentry without channel', () => {
-    beforeEach(done => {
-      this.room.robot.adapter.client.web = {
-        chat: {
-          postMessage: (channel, text, options) => {
-            this.postMessage = {
-              channel: channel,
-              text: text,
-              options: options
-            }
-            done()
-          }
-        }
-      }
-      const postData = querystring.stringify({
-        payload: JSON.stringify({
-          parse: 'none',
-          username: 'Sentry',
-          attachments: [
-            {
-              color: '#f43f20',
-              fields: [
-                {
-                  short: true,
-                  value: 'Escaleno visto-bueno',
-                  title: 'Project'
-                }
-              ],
-              fallback: '[Escaleno visto-bueno] Hola mundo',
-              title_link:
-                'https://sentry.io/escaleno/visto-bueno/issues/180903558/',
-              title: 'Hola mundo'
-            }
-          ]
-        })
-      })
-      const postOptions = {
-        hostname: 'localhost',
-        port: 8080,
-        path: '/sentry',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Content-Length': Buffer.byteLength(postData)
-        }
-      }
-      const req = http.request(postOptions, response => {
-        this.response = response
-      })
-      req.write(postData)
-      req.end()
-    })
-
-    it('responds with status 200 and results', () => {
-      expect(this.postMessage.options.parse).to.eql('none')
-      expect(this.postMessage.options.username).to.eql('Sentry')
-      expect(this.postMessage.options.attachments).to.eql([
-        {
-          color: '#f43f20',
-          fields: [
-            {
-              short: true,
-              value: 'Escaleno visto-bueno',
-              title: 'Project'
-            }
-          ],
-          fallback: '[Escaleno visto-bueno] Hola mundo',
-          title_link:
-            'https://sentry.io/escaleno/visto-bueno/issues/180903558/',
-          title: 'Hola mundo'
+          title: 'This is an example Python exception',
+          title_url: 'https://sentry.io/escaleno/visto-bueno/issues/180903558/',
+          text: 'raven.scripts.runner in main',
+          color: '#E03E2F',
+          footer: 'visto-bueno via Send a notification for new issues',
+          footer_icon:
+            'https://raw.githubusercontent.com/getsentry/sentry/master/src/sentry/static/sentry/images/sentry-email-avatar.png',
+          ts: 1558586196.707
         }
       ])
       expect(this.postMessage.options.channel).to.eql('general')
