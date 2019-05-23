@@ -1,6 +1,5 @@
 'use strict'
 
-require('coffee-script/register')
 const Helper = require('hubot-test-helper')
 const { expect } = require('chai')
 const http = require('http')
