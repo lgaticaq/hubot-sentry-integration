@@ -29,6 +29,8 @@
   "homepage": "https://github.com/lgaticaq/hubot-sentry-integration#readme",
   "dependencies": {},
   "devDependencies": {
+    "@commitlint/cli": "7.6.1",
+    "@commitlint/config-conventional": "7.6.0",
     "@semantic-release/changelog": "3.0.2",
     "@semantic-release/commit-analyzer": "6.1.0",
     "@semantic-release/git": "7.0.8",
@@ -76,5 +78,10 @@
   },
   "nyc": {
     "extends": "nyc-config-common"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   }
 }
