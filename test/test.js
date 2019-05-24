@@ -1,6 +1,6 @@
 'use strict'
 
-const { describe, beforeEach, afterEach, context, it } = require('mocha')
+const { describe, beforeEach, afterEach, it } = require('mocha')
 const Helper = require('hubot-test-helper')
 const { expect } = require('chai')
 const http = require('http')
@@ -27,7 +27,7 @@ describe('hubot-sentry', function () {
 
   afterEach(() => this.room.destroy())
 
-  context('POST /sentry', () => {
+  describe('POST /sentry', () => {
     beforeEach(done => {
       this.room.robot.adapter.client.web = {
         chat: {
@@ -104,7 +104,7 @@ describe('hubot-sentry', function () {
     })
   })
 
-  context('POST /sentry without channel', () => {
+  describe('POST /sentry without channel', () => {
     beforeEach(done => {
       this.room.robot.adapter.client.web = {
         chat: {
