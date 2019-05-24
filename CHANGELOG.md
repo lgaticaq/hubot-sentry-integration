@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/lgaticaq/hubot-sentry-integration/compare/v1.0.0...v2.0.0) (2019-05-24)
+
+
+### Features
+
+* **webhook:** migrate to legacy integration ([e64c26e](https://github.com/lgaticaq/hubot-sentry-integration/commit/e64c26e))
+
+
+### BREAKING CHANGES
+
+* **webhook:** Now only parse legacy sentry integrations (webhooks)
+
 # [1.0.0](https://github.com/lgaticaq/hubot-sentry-integration/compare/v0.0.2...v1.0.0) (2019-05-24)
 
 
