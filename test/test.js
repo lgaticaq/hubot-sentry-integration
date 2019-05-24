@@ -5,7 +5,7 @@ const { expect } = require('chai')
 const http = require('http')
 const querystring = require('querystring')
 
-const helper = new Helper('./../src/index.js')
+const helper = new Helper('../src/script.js')
 
 describe('hubot-sentry', function () {
   beforeEach(() => {
