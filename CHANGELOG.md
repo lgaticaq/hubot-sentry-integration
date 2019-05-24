@@ -1,3 +1,20 @@
+# [1.0.0](https://github.com/lgaticaq/hubot-sentry-integration/compare/v0.0.2...v1.0.0) (2019-05-24)
+
+
+### Bug Fixes
+
+* **deps:** update dependency coffee-script to v1.12.7 ([aa570b2](https://github.com/lgaticaq/hubot-sentry-integration/commit/aa570b2))
+
+
+### Features
+
+* **node:** set engine node to >=10 ([e244417](https://github.com/lgaticaq/hubot-sentry-integration/commit/e244417))
+
+
+### BREAKING CHANGES
+
+* **node:** Set min node version to v10.0.0
+
 #### 0.0.2 (2017-6-12)
 
 ##### Chores
@@ -25,4 +42,3 @@
 ##### Chores
 
 * **src:** first commit ([2dc56c9c](https://github.com/lgaticaq/hubot-sentry-integration/commit/2dc56c9c0372d43f688b9c0264f8e61a94f26d0b))
-
