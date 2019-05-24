@@ -4,8 +4,8 @@
   "description": "Clone sentry integration with slack",
   "main": "src",
   "scripts": {
-    "lint": "eslint 'src/**/*.js' 'test/**/*.js'",
-    "format": "prettier-standard 'src/**/*.js' 'test/**/*.js'",
+    "lint": "eslint . --fix",
+    "format": "prettier-standard '{src,test}/**/*.js'",
     "test": "nyc mocha"
   },
   "engines": {
@@ -45,6 +45,8 @@
     "eslint-plugin-promise": "4.1.1",
     "eslint-plugin-standard": "4.0.0",
     "hubot-test-helper": "1.9.0",
+    "husky": "2.3.0",
+    "lint-staged": "8.1.7",
     "mocha": "6.1.4",
     "nyc": "14.1.1",
     "nyc-config-common": "1.0.1",
@@ -62,6 +64,9 @@
       "mocha": true
     }
   },
+  "eslintIgnore": [
+    "coverage"
+  ],
   "release": {
     "plugins": [
       "@semantic-release/commit-analyzer",
@@ -83,5 +88,20 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "linters": {
+      "{src,test}/**/*.js": [
+        "eslint --fix",
+        "prettier-standard",
+        "git add"
+      ]
+    }
   }
 }
