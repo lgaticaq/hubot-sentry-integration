@@ -1,5 +1,6 @@
 'use strict'
 
+const { describe, beforeEach, afterEach, context, it } = require('mocha')
 const Helper = require('hubot-test-helper')
 const { expect } = require('chai')
 const http = require('http')
@@ -14,10 +15,10 @@ describe('hubot-sentry', function () {
       rtm: {
         dataStore: {
           getChannelByName: to => {
-            const channels = {
-              '#general': { id: 'R00000001', name: 'general' }
-            }
-            return channels[to]
+            const channels = new Map([
+              ['#general', { id: 'R00000001', name: 'general' }]
+            ])
+            return channels.get(to)
           }
         }
       }
