@@ -39,10 +39,14 @@
     "@semantic-release/release-notes-generator": "7.1.4",
     "chai": "4.2.0",
     "eslint": "5.16.0",
+    "eslint-config-jsdoc-strict": "2.0.0",
+    "eslint-config-prettier": "4.3.0",
     "eslint-config-standard": "12.0.0",
     "eslint-plugin-import": "2.17.2",
+    "eslint-plugin-jsdoc": "6.0.3",
     "eslint-plugin-node": "9.0.1",
     "eslint-plugin-promise": "4.1.1",
+    "eslint-plugin-security": "1.4.0",
     "eslint-plugin-standard": "4.0.0",
     "hubot-test-helper": "1.9.0",
     "husky": "2.3.0",
@@ -54,14 +58,20 @@
     "semantic-release": "15.13.12"
   },
   "eslintConfig": {
-    "extends": "standard",
-    "parserOptions": {
-      "ecmaVersion": 2017
-    },
-    "env": {
-      "es6": true,
-      "node": true,
-      "mocha": true
+    "extends": [
+      "eslint:recommended",
+      "standard",
+      "jsdoc-strict",
+      "plugin:promise/recommended",
+      "plugin:security/recommended"
+    ],
+    "plugins": [
+      "promise",
+      "security"
+    ],
+    "rules": {
+      "no-console": "error",
+      "require-await": "error"
     }
   },
   "eslintIgnore": [
