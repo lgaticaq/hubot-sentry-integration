@@ -10,17 +10,14 @@
     "test": "mocha",
     "posttest": "istanbul report text-summary lcov",
     "coveralls": "coveralls < coverage/lcov.info",
-    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info",
-    "release:major": "changelog -M && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version major && git push origin && git push origin --tags && npm publish",
-    "release:minor": "changelog -m && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version minor && git push origin && git push origin --tags && npm publish",
-    "release:patch": "changelog -p && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version patch && git push origin && git push origin --tags && npm publish"
+    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info"
   },
   "engines": {
     "node": ">=6"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/lgaticaq/hubot-sentry-integration.git"
+    "url": "https://github.com/lgaticaq/hubot-sentry-integration.git"
   },
   "keywords": [
     "hubot",
@@ -36,6 +33,12 @@
   "homepage": "https://github.com/lgaticaq/hubot-sentry-integration#readme",
   "dependencies": {},
   "devDependencies": {
+    "@semantic-release/changelog": "3.0.2",
+    "@semantic-release/commit-analyzer": "6.1.0",
+    "@semantic-release/git": "7.0.8",
+    "@semantic-release/github": "5.2.10",
+    "@semantic-release/npm": "5.1.7",
+    "@semantic-release/release-notes-generator": "7.1.4",
     "chai": "4.2.0",
     "eslint": "5.16.0",
     "eslint-config-standard": "12.0.0",
@@ -43,11 +46,11 @@
     "eslint-plugin-node": "9.0.1",
     "eslint-plugin-promise": "4.1.1",
     "eslint-plugin-standard": "4.0.0",
-    "generate-changelog": "1.7.1",
     "hubot-test-helper": "1.9.0",
     "istanbul": "0.4.5",
     "mocha": "6.1.4",
-    "prettier-standard": "9.1.1"
+    "prettier-standard": "9.1.1",
+    "semantic-release": "15.13.12"
   },
   "eslintConfig": {
     "extends": "standard",
@@ -59,5 +62,15 @@
       "node": true,
       "mocha": true
     }
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/git",
+      "@semantic-release/github"
+    ]
   }
 }
