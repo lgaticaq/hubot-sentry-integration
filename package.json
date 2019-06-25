@@ -54,7 +54,7 @@
     "mocha": "6.1.4",
     "nyc": "14.1.1",
     "nyc-config-common": "1.0.1",
-    "prettier-standard": "9.1.1",
+    "prettier-standard": "10.0.0",
     "semantic-release": "15.13.16"
   },
   "eslintConfig": {
