@@ -36,7 +36,7 @@
     "@semantic-release/git": "7.0.18",
     "@semantic-release/github": "5.5.5",
     "@semantic-release/npm": "5.3.4",
-    "@semantic-release/release-notes-generator": "7.3.4",
+    "@semantic-release/release-notes-generator": "7.3.5",
     "chai": "4.2.0",
     "eslint": "6.8.0",
     "eslint-config-jsdoc-strict": "2.0.0",
@@ -55,7 +55,7 @@
     "nyc": "14.1.1",
     "nyc-config-common": "1.0.1",
     "prettier-standard": "15.0.1",
-    "semantic-release": "15.13.31"
+    "semantic-release": "15.14.0"
   },
   "eslintConfig": {
     "extends": [
