@@ -35,7 +35,7 @@ module.exports = robot => {
         attachments: [
           {
             title: req.body.message,
-            title_url: req.body.url,
+            title_link: req.body.url,
             text: req.body.culprit,
             color: levels.has(req.body.level)
               ? levels.get(req.body.level)
