@@ -2,44 +2,56 @@
 
 const { describe, beforeEach, afterEach, it } = require('mocha')
 const Helper = require('hubot-test-helper')
-const { expect } = require('chai')
+const chai = require('chai')
 const http = require('http')
+const sinon = require('sinon')
+const sinonChai = require('sinon-chai')
+
+const { expect } = chai
+chai.use(sinonChai)
 
 const helper = new Helper('../src/script.js')
 
 describe('hubot-sentry', function () {
+  /** @type {import('../src/types').Room} */
+  let room
   beforeEach(() => {
-    this.room = helper.createRoom()
-    this.room.robot.adapter.client = {
-      rtm: {
-        dataStore: {
-          getChannelByName: to => {
-            const channels = new Map([
-              ['general', { id: 'R00000001', name: 'general' }]
-            ])
-            return channels.get(to)
-          }
-        }
+    room = helper.createRoom()
+    room.robot.adapter.client = {
+      web: {
+        // @ts-ignore
+        conversations: { list: () => ({}) },
+        // @ts-ignore
+        chat: { postMessage: () => ({}) }
       }
     }
   })
 
-  afterEach(() => this.room.destroy())
+  afterEach(() => room.destroy())
 
   describe('POST /sentry', () => {
+    const sandbox = sinon.createSandbox()
     beforeEach(done => {
-      this.room.robot.adapter.client.web = {
-        chat: {
-          postMessage: (channel, text, options) => {
-            this.postMessage = {
-              channel: channel,
-              text: text,
-              options: options
+      sinon.replace(
+        room.robot.adapter.client.web.conversations,
+        'list',
+        sinon.fake.resolves({
+          ok: true,
+          channels: [
+            {
+              name: 'general'
             }
-            done()
-          }
-        }
+          ]
+        })
+      )
+      room.robot.adapter.client.web.chat.postMessage = (
+        channel,
+        text,
+        options
+      ) => {
+        done()
       }
+      sandbox.spy(room.robot.adapter.client.web.chat, 'postMessage')
       const postData = JSON.stringify({
         message: 'This is an example Python exception',
         url: 'https://sentry.io/escaleno/visto-bueno/issues/180903558/',
@@ -60,19 +72,23 @@ describe('hubot-sentry', function () {
           'Content-Length': Buffer.byteLength(postData)
         }
       }
-      const req = http.request(postOptions, response => {
-        this.response = response
-      })
+      const req = http.request(postOptions)
       req.write(postData)
       req.end()
     })
 
     it('responds with status 200 and results', () => {
-      expect(this.postMessage.options.username).to.eql('Sentry')
-      expect(this.postMessage.options.attachments).to.eql([
+      /** @type {import('../src/types').PostMessageOptions} */
+      // @ts-ignore
+      const [options] = room.robot.adapter.client.web.chat.postMessage.getCall(
+        0
+      ).args[2]
+      expect(options.username).to.eql('Sentry')
+      expect(options.attachments).to.deep.equal([
         {
           title: 'This is an example Python exception',
-          title_url: 'https://sentry.io/escaleno/visto-bueno/issues/180903558/',
+          title_link:
+            'https://sentry.io/escaleno/visto-bueno/issues/180903558/',
           text: 'raven.scripts.runner in main',
           color: '#E03E2F',
           footer: 'visto-bueno via Send a notification for new issues',
@@ -81,7 +97,13 @@ describe('hubot-sentry', function () {
           ts: 1558586196.707
         }
       ])
-      expect(this.postMessage.options.channel).to.eql('general')
+      expect(
+        // @ts-ignore
+        room.robot.adapter.client.web.chat.postMessage.getCall(0).args[0]
+      ).to.eql('general')
+    })
+    afterEach(() => {
+      sandbox.restore()
     })
   })
 })

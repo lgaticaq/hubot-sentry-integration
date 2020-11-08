@@ -32,7 +32,7 @@ jobs:
       before_script:
         - npm i -g coveralls codeclimate-test-reporter
       script:
-        - npx nyc check-coverage --lines 100 --per-file
+        - npx nyc check-coverage --lines 80 --per-file
       after_success:
         - npx nyc report > lcov.info
         - coveralls < lcov.info
