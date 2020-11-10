@@ -44,6 +44,7 @@ describe('hubot-sentry', function () {
           ]
         })
       )
+      // @ts-ignore
       room.robot.adapter.client.web.chat.postMessage = (
         channel,
         text,
@@ -80,9 +81,8 @@ describe('hubot-sentry', function () {
     it('responds with status 200 and results', () => {
       /** @type {import('../src/types').PostMessageOptions} */
       // @ts-ignore
-      const [options] = room.robot.adapter.client.web.chat.postMessage.getCall(
-        0
-      ).args[2]
+      const options = room.robot.adapter.client.web.chat.postMessage.getCall(0)
+        .args[2]
       expect(options.username).to.eql('Sentry')
       expect(options.attachments).to.deep.equal([
         {
