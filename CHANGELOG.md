@@ -1,3 +1,11 @@
+## [2.0.1](https://github.com/lgaticaq/hubot-sentry-integration/compare/v2.0.0...v2.0.1) (2020-11-11)
+
+
+### Bug Fixes
+
+* **sentry:** fix get issue link ([6668207](https://github.com/lgaticaq/hubot-sentry-integration/commit/6668207cc743cee0034386bb5336af7c1e6d6db8))
+* replace title_url to title_link in attachment ([8fc8774](https://github.com/lgaticaq/hubot-sentry-integration/commit/8fc877466e9f1458fbfd7455d0a7c71f3654e7e2))
+
 # [2.0.0](https://github.com/lgaticaq/hubot-sentry-integration/compare/v1.0.0...v2.0.0) (2019-05-24)
 
 
