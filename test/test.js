@@ -54,13 +54,24 @@ describe('hubot-sentry', function () {
       }
       sandbox.spy(room.robot.adapter.client.web.chat, 'postMessage')
       const postData = JSON.stringify({
-        message: 'This is an example Python exception',
-        url: 'https://sentry.io/escaleno/visto-bueno/issues/180903558/',
-        culprit: 'raven.scripts.runner in main',
+        message: '',
+        url:
+          'https://sentry.io/organizations/my-org/issues/123456789/?referrer=webhooks_plugin',
+        culprit: 'GET /api/comment/:commentId',
         level: 'error',
-        project_slug: 'visto-bueno',
+        project_slug: 'my-project',
+        triggering_rules: ['Send a notification for new issues'],
         event: {
-          timestamp: 1558586196.707
+          culprit: 'GET /api/comment/:commentId',
+          timestamp: 1558586196.707,
+          exception: {
+            values: [
+              {
+                type: 'SequelizeValidationError',
+                value: '"a123213" is not a valid integer'
+              }
+            ]
+          }
         }
       })
       const postOptions = {
@@ -86,12 +97,12 @@ describe('hubot-sentry', function () {
       expect(options.username).to.eql('Sentry')
       expect(options.attachments).to.deep.equal([
         {
-          title: 'This is an example Python exception',
+          title: 'SequelizeValidationError - GET /api/comment/:commentId',
           title_link:
-            'https://sentry.io/escaleno/visto-bueno/issues/180903558/',
-          text: 'raven.scripts.runner in main',
+            'https://sentry.io/organizations/my-org/issues/123456789/?referrer=webhooks_plugin',
+          text: '"a123213" is not a valid integer',
           color: '#E03E2F',
-          footer: 'visto-bueno via Send a notification for new issues',
+          footer: 'my-project via Send a notification for new issues',
           footer_icon:
             'https://raw.githubusercontent.com/getsentry/sentry/master/src/sentry/static/sentry/images/sentry-email-avatar.png',
           ts: 1558586196.707

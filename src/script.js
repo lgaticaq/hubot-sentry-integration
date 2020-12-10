@@ -25,6 +25,7 @@
  * @returns {void} -
  */
 module.exports = robot => {
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   robot.router.post('/sentry/:room', async (req, res) => {
     res.send('ok')
     try {
@@ -36,6 +37,24 @@ module.exports = robot => {
           ['error', '#E03E2F'],
           ['fatal', '#d20f2a']
         ])
+        let title = req.body.culprit
+        let text = ''
+        let footer = `${req.body.project_slug} via Send a notification for new issues`
+        if (
+          req.body.event.exception &&
+          Array.isArray(req.body.event.exception.values) &&
+          req.body.event.exception.values.length > 0
+        ) {
+          const exception = req.body.event.exception.values[0]
+          title = `${exception.type} - ${req.body.event.culprit}`
+          text = exception.value
+        }
+        if (
+          Array.isArray(req.body.triggering_rules) &&
+          req.body.triggering_rules.length > 0
+        ) {
+          footer = `${req.body.project_slug} via ${req.body.triggering_rules[0]}`
+        }
         /** @type {PostMessageOptions} */
         const options = {
           as_user: false,
@@ -46,13 +65,13 @@ module.exports = robot => {
           unfurl_links: false,
           attachments: [
             {
-              title: req.body.message,
+              title,
               title_link: req.body.url,
-              text: req.body.culprit,
+              text,
               color: levels.has(req.body.level)
                 ? levels.get(req.body.level)
                 : levels.get('error'),
-              footer: `${req.body.project_slug} via Send a notification for new issues`,
+              footer,
               footer_icon:
                 'https://raw.githubusercontent.com/getsentry/sentry/master/src/sentry/static/sentry/images/sentry-email-avatar.png',
               ts: req.body.event.timestamp
