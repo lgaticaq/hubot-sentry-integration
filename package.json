@@ -45,7 +45,7 @@
     "@types/sinon": "9.0.10",
     "@types/sinon-chai": "3.2.5",
     "chai": "4.2.0",
-    "eslint": "7.17.0",
+    "eslint": "7.18.0",
     "eslint-config-jsdoc-strict": "2.0.0",
     "eslint-config-prettier": "6.15.0",
     "eslint-config-standard": "16.0.2",
