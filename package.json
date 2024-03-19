@@ -30,8 +30,8 @@
   "homepage": "https://github.com/lgaticaq/hubot-sentry-integration#readme",
   "dependencies": {},
   "devDependencies": {
-    "@commitlint/cli": "11.0.0",
-    "@commitlint/config-conventional": "11.0.0",
+    "@commitlint/cli": "19.2.1",
+    "@commitlint/config-conventional": "19.1.0",
     "@eclass/eslint-config": "2.0.1",
     "@semantic-release/changelog": "5.0.1",
     "@semantic-release/commit-analyzer": "8.0.1",
